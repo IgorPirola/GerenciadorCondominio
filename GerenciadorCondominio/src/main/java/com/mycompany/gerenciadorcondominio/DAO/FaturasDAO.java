@@ -20,8 +20,12 @@ import java.util.List;
 public class FaturasDAO {
     private Connection con;
 
-    public FaturasDAO() throws SQLException {
+    public FaturasDAO(){
         if (con == null) con = DatabaseConnection.getConnection();
+    }
+
+    public void closeBd(){
+        DatabaseConnection.closeConnection(con);
     }
     
     public boolean bdInsert(Faturas fat){
@@ -38,8 +42,6 @@ public class FaturasDAO {
                 return true;
             } catch (SQLException e){
                 return false;
-            } finally {
-                DatabaseConnection.closeConnection(con);
             }
         }
         return false;
@@ -47,46 +49,54 @@ public class FaturasDAO {
     
     public Faturas bdSelect(int idFat) throws SQLException{
         if(con!=null){
-            String sql="SELECT id_res, valor, mes, ano"+ " FROM Debitos WHERE id = ?";
-            PreparedStatement comando = con.prepareStatement(sql);
-            comando.setInt(1, idFat);
-            
-            ResultSet resultado = comando.executeQuery();
-            
-            if(resultado.next()){
-                Faturas fatura = new Faturas();
-                fatura.setId(idFat);
-                fatura.setRes(new ResidenciaDAO().bdSelect(resultado.getInt("id_res")));
-                fatura.setValor(resultado.getDouble("valor"));
-                fatura.setMes(resultado.getInt("mes"));
-                fatura.setAno(resultado.getInt("ano"));
+            try {
+                String sql="SELECT id_res, valor, mes, ano FROM Debitos WHERE id = ?";
+                PreparedStatement comando = con.prepareStatement(sql);
+                comando.setInt(1, idFat);
                 
-                return fatura;
+                ResultSet resultado = comando.executeQuery();
+                
+                if(resultado.next()){
+                    Faturas fatura = new Faturas();
+                    fatura.setId(idFat);
+                    fatura.setRes(new ResidenciaDAO().bdSelect(resultado.getInt("id_res")));
+                    fatura.setValor(resultado.getDouble("valor"));
+                    fatura.setMes(resultado.getInt("mes"));
+                    fatura.setAno(resultado.getInt("ano"));
+                    
+                    return fatura;
+                }
+            } catch (SQLException e){
+                return null;
             }
         }
         return null;
     }
     
-    public List<Faturas> bdSelectAll() throws SQLException{
+    public List<Faturas> bdSelectAll(){
         List<Faturas> faturas = new ArrayList<>();
         
         if(con!=null){
-            String sql="SELECT id, id_res, valor, mes, ano"+ " FROM Debitos";
-            PreparedStatement comando = con.prepareStatement(sql);            
-            ResultSet resultado = comando.executeQuery();
-            
-            if(resultado.next()){
-                Faturas fatura = new Faturas();
+            try {
+                String sql="SELECT id, id_res, valor, mes, ano FROM Debitos";
+                PreparedStatement comando = con.prepareStatement(sql);            
+                ResultSet resultado = comando.executeQuery();
                 
-                fatura.setId(resultado.getInt("id"));
-                fatura.setRes(new ResidenciaDAO().bdSelect(resultado.getInt("id_res")));
-                fatura.setValor(resultado.getDouble("valor"));
-                fatura.setMes(resultado.getInt("mes"));
-                fatura.setAno(resultado.getInt("ano"));
-                
-                faturas.add(fatura);
+                if(resultado.next()){
+                    Faturas fatura = new Faturas();
+                    
+                    fatura.setId(resultado.getInt("id"));
+                    fatura.setRes(new ResidenciaDAO().bdSelect(resultado.getInt("id_res")));
+                    fatura.setValor(resultado.getDouble("valor"));
+                    fatura.setMes(resultado.getInt("mes"));
+                    fatura.setAno(resultado.getInt("ano"));
+                    
+                    faturas.add(fatura);
+                }
+                return faturas;
+            } catch (SQLException e){
+                return null;
             }
-            return faturas;
         }
         return null;
     }
@@ -94,7 +104,7 @@ public class FaturasDAO {
     public boolean bdRemove(int id){
         if(con!=null){
             try {
-                String sql="DELETE FROM Debitos"+ " WHERE id = ?";
+                String sql="DELETE FROM Debitos WHERE id = ?";
                 PreparedStatement comando = con.prepareStatement(sql);
                 comando.setInt(1, id);
 
@@ -102,8 +112,6 @@ public class FaturasDAO {
                 return true;
             } catch (SQLException e){
                 return false;
-            } finally {
-                DatabaseConnection.closeConnection(con);
             }
         }
         return false;
