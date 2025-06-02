@@ -210,6 +210,10 @@ public class ProprietariosView extends javax.swing.JFrame {
             if(propCon.insertProprietario(nome, idade, cpf, rg)){
                 propCon.preencherTabela(jTable1);
                 JOptionPane.showMessageDialog(null, "Proprietario inserido com sucesso", "Sucesso", 1);
+                jTxtNome.setText("");
+                jTxtCpf.setText("");
+                jTxtIdade.setText("");
+                jTxtRg.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Proprietario não inserido\nVerifique os campos", "Falha", 0);
             }

@@ -215,6 +215,10 @@ public class ResidenciaView extends javax.swing.JFrame {
             if(resCon.insertResidencia(propID, rua, num, cep, true)){
                 resCon.preencherTabela(jTable1);
                 JOptionPane.showMessageDialog(null, "Residencia inserida com sucesso", "Sucesso", 1);
+                jTxtRua.setText("");
+                jTxtNum.setText("");
+                jTxtCep.setText("");
+                jTxtProp.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "Residencia não inserida\nVerifique os campos", "Falha", 0);
             }

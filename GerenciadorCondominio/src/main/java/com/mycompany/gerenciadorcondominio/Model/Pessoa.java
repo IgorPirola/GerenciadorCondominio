@@ -4,8 +4,6 @@
  */
 package com.mycompany.gerenciadorcondominio.Model;
 
-import java.util.Objects;
-
 /**
  *
  * @author Igor

@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Igor
  */
 public class ResidenciaController implements Observer {
-    private ResidenciaDAO resDAO = new ResidenciaDAO();
+    private final ResidenciaDAO resDAO = new ResidenciaDAO();
     
     public boolean insertResidencia(int propID, String rua, int numero, String cep, boolean em_dia){
         Proprietario prop = new ProprietarioDAO().bdSelect(propID);

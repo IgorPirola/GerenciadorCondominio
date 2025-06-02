@@ -18,7 +18,7 @@ public class DatabaseConnection {
             return DriverManager.getConnection(
             "jdbc:mysql://localhost:3306/condominio",
             "root",
-            "#Z0HgpE95#"
+            "1234"
             );
         }catch (SQLException e){
             System.err.println(e);
@@ -31,6 +31,7 @@ public class DatabaseConnection {
             try {
                 con.close();
             } catch (SQLException e) {
+                System.err.println(e);
             }
         }
     }

@@ -130,7 +130,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenuFatMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenuFatMenuSelected
         // TODO add your handling code here:
         this.dispose();
-        new FaturasView(new FaturaController()).setVisible(true);
+        new FaturasView(FaturaController.getInstancia()).setVisible(true);
     }//GEN-LAST:event_jMenuFatMenuSelected
 
     /**

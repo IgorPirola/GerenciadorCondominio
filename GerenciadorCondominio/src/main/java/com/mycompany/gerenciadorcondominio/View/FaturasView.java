@@ -215,12 +215,16 @@ public class FaturasView extends javax.swing.JFrame {
             mes = Integer.parseInt(jTxtMes.getText());
             if(fatCon.insertFatura(resID, valor, mes, ano)){
                 fatCon.preencherTabela(jTable1);
-                JOptionPane.showMessageDialog(null, "Residencia inserida com sucesso", "Sucesso", 1);
+                JOptionPane.showMessageDialog(null, "Fatura inserida com sucesso", "Sucesso", 1);
+                jTxtValor.setText("");
+                jTxtAno.setText("");
+                jTxtMes.setText("");
+                jTxtRes.setText("");
             } else {
-                JOptionPane.showMessageDialog(null, "Residencia não inserida\nVerifique os campos", "Falha", 0);
+                JOptionPane.showMessageDialog(null, "Fatura não inserida\nVerifique os campos", "Falha", 0);
             }
         } catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Campo de numero ou do proprietario da Residencia invalido", "Falha", 0);
+            JOptionPane.showMessageDialog(null, "Campos invalidos", "Falha", 0);
         }
     }//GEN-LAST:event_btnCriarActionPerformed
 
@@ -265,7 +269,7 @@ public class FaturasView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FaturasView(new FaturaController()).setVisible(true);
+                new FaturasView(FaturaController.getInstancia()).setVisible(true);
             }
         });
     }

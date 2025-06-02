@@ -21,6 +21,17 @@ import javax.swing.table.DefaultTableModel;
  * @author Igor
  */
 public class FaturaController implements Subject{
+    private static FaturaController instancia;
+        
+    private FaturaController(){}
+    
+    public static FaturaController getInstancia() {
+        if (instancia == null) {
+            instancia = new FaturaController();
+        }
+        return instancia;
+    }
+    
     private final List<Observer> observers = new ArrayList<>();
     private final FaturasDAO fatDAO = new FaturasDAO();
     private final ResidenciaController resCon = new ResidenciaController();
@@ -100,10 +111,8 @@ public class FaturaController implements Subject{
 
     @Override
     public void notifyObserver(int idRes, boolean comando) {
-        System.out.println(observers);
         for(Observer o : observers){
             o.update(idRes, comando);
-            System.out.println(idRes + " " + comando);
         }
     }
 }

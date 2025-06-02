@@ -231,6 +231,11 @@ public class MoradoresView extends javax.swing.JFrame {
                 if(morCon.insertMorador(nome, idade, cpf, rg, idRes)){
                     morCon.preencherTabela(jTable1);
                 JOptionPane.showMessageDialog(null, "Morador inserido com sucesso", "Sucesso", 1);
+                jTxtNome.setText("");
+                jTxtCpf.setText("");
+                jTxtRg.setText("");
+                jTxtRes.setText("");
+                jTxtIdade.setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "Morador não inserido\nVerifique os campos", "Falha", 0);
                 }

@@ -4,7 +4,6 @@
  */
 package com.mycompany.gerenciadorcondominio.Model;
 
-import com.mycompany.gerenciadorcondominio.Observer.Observer;
 
 /**
  *
