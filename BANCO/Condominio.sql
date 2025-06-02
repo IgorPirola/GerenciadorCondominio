@@ -2,6 +2,14 @@ create database condominio;
 
 use condominio;
 
+create table Proprietario (
+	id int primary key auto_increment not null,
+    nome varchar(100),
+    idade int,
+    cpf varchar(20),
+    rg varchar(20)
+);
+
 create table Residencia (
 	id int primary key auto_increment not null,
     id_prop int,
@@ -19,15 +27,7 @@ create table Moradores (
     idade int,
     cpf varchar(20),
     rg varchar(20),
-    foreign key (id_res) references Residencias(id)
-);
-
-create table Proprietario (
-	id int primary key auto_increment not null,
-    nome varchar(100),
-    idade int,
-    cpf varchar(20),
-    rg varchar(20),
+    foreign key (id_res) references Residencia(id)
 );
 
 create table Debitos (
@@ -36,5 +36,5 @@ create table Debitos (
     valor double,
     mes int,
     ano int,
-    foreign key (id_res) references Residencias(id)
+    foreign key (id_res) references Residencia(id)
 );
