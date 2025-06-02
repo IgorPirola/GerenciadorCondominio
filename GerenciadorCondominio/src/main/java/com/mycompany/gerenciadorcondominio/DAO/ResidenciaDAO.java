@@ -22,6 +22,10 @@ public class ResidenciaDAO {
         if (con == null) con = DatabaseConnection.getConnection();
     }
 
+    public void closeBd(){
+        DatabaseConnection.closeConnection(con);
+    }
+
     public boolean bdInsert(Residencia res){
         if (con != null){
             try{
@@ -37,8 +41,6 @@ public class ResidenciaDAO {
                 return true;
             } catch (SQLException e){
                 return false;
-            } finally{
-                DatabaseConnection.closeConnection(con);
             }
         }
         return false;
@@ -69,6 +71,49 @@ public class ResidenciaDAO {
             
         }
         return null;
+    }
+
+    public List<Residencia> bdSelectAll(){
+        List<Residencia> resL = new ArrayList<>();
+        if(con!=null){
+            try{
+                String sql="SELECT id_prop, rua, numero, cep, em_dia FROM Residencia";
+                PreparedStatement comando = con.prepareStatement(sql);
+                ResultSet resultado = comando.executeQuery();
+                
+                while(resultado.next()){
+                    Residencia res = new Residencia();
+                    res.setId(idRes);
+                    res.setProp(new ProprietarioDAO().bdSelect(resultado.getInt("id_prop")));
+                    res.setRua(resultado.getString("rua"));
+                    res.setNumero(resultado.getInt("numero"));
+                    res.setCep(resultado.getString("cep"));
+                    res.setEm_dia(resultado.getBoolean("em_dia"));
+                    resL.add(res);
+                }
+                return resL;
+            } catch(SQLException e){
+                return null;
+            }
+            
+        }
+        return null;
+    }
+    
+    public boolean bdRemove(int id){
+        if(con!=null){
+            try {
+                String sql="DELETE FROM Residencia WHERE id = ?";
+                PreparedStatement comando = con.prepareStatement(sql);
+                comando.setInt(1, id);
+
+                comando.executeUpdate();
+                return true;
+            } catch (SQLException e){
+                return false;
+            }
+        }
+        return false;
     }
 
 }
