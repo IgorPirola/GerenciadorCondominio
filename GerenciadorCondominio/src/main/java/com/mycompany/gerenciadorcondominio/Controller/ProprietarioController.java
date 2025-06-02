@@ -6,13 +6,8 @@ package com.mycompany.gerenciadorcondominio.Controller;
 
 import com.mycompany.gerenciadorcondominio.Adapter.CPF_Adapter;
 import com.mycompany.gerenciadorcondominio.Adapter.ValidacaoCPF;
-import com.mycompany.gerenciadorcondominio.DAO.MoradoresDAO;
 import com.mycompany.gerenciadorcondominio.DAO.ProprietarioDAO;
-import com.mycompany.gerenciadorcondominio.Model.Moradores;
 import com.mycompany.gerenciadorcondominio.Model.Proprietario;
-import com.mycompany.gerenciadorcondominio.Model.Residencia;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;

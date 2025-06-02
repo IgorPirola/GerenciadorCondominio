@@ -4,6 +4,8 @@
  */
 package com.mycompany.gerenciadorcondominio.Model;
 
+import com.mycompany.gerenciadorcondominio.Observer.Observer;
+
 /**
  *
  * @author Igor
@@ -74,6 +76,4 @@ public class Residencia {
     public void setEm_dia(boolean em_dia) {
         this.em_dia = em_dia;
     }
-    
-    
 }

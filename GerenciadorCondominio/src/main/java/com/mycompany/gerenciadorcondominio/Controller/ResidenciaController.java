@@ -4,16 +4,20 @@
  */
 package com.mycompany.gerenciadorcondominio.Controller;
 
+import com.mycompany.gerenciadorcondominio.DAO.ProprietarioDAO;
 import com.mycompany.gerenciadorcondominio.DAO.ResidenciaDAO;
 import com.mycompany.gerenciadorcondominio.Model.Proprietario;
 import com.mycompany.gerenciadorcondominio.Model.Residencia;
-import java.sql.SQLException;
+import com.mycompany.gerenciadorcondominio.Observer.Observer;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Igor
  */
-public class ResidenciaController {
+public class ResidenciaController implements Observer {
     private ResidenciaDAO resDAO = new ResidenciaDAO();
     
     public boolean insertResidencia(int propID, String rua, int numero, String cep, boolean em_dia){
@@ -23,7 +27,7 @@ public class ResidenciaController {
         return new ResidenciaDAO().bdInsert(residencia);
     }
 
-    public void preencherTabela(JTable jtabela){
+     public void preencherTabela(JTable jtabela){
         DefaultTableModel dtm = (DefaultTableModel) jtabela.getModel();
         int tamTabela;
         int posicaoLinha = 0;
@@ -42,11 +46,12 @@ public class ResidenciaController {
             for(int i=0; i<tamTabela; i++){
                 Residencia res = resDAO.bdSelectAll().get(i);
                 jtabela.setValueAt(res.getId(), posicaoLinha, 0);
-                jtabela.setValueAt(res.getRua(), posicaoLinha, 1);
-                jtabela.setValueAt(res.getNumero(), posicaoLinha, 2);
-                jtabela.setValueAt(res.getCep(), posicaoLinha, 3);
-                jtabela.setValueAt(res.getEm_dia(), posicaoLinha, 4);
-                jtabela.setValueAt(res.getProp().getId(), posicaoLinha, 5);
+                jtabela.setValueAt(res.getProp().getId(), posicaoLinha, 1);
+                jtabela.setValueAt(res.getRua(), posicaoLinha, 2);
+                jtabela.setValueAt(res.getNumero(), posicaoLinha, 3);
+                jtabela.setValueAt(res.getCep(), posicaoLinha, 4);
+                jtabela.setValueAt(res.isEm_dia(), posicaoLinha, 5);
+                
 
                 posicaoLinha += 1;
             }
@@ -65,11 +70,18 @@ public class ResidenciaController {
             );
             
             if(resposta == JOptionPane.YES_OPTION){
-                resDAO.bdRemove(Integer.parseInt(jtabela.getValueAt(jtabela.getSelectedRow(), 0).toString()));
-                
-                JOptionPane.showMessageDialog(null, "Residencia excluida com sucesso", "Sucesso", 1);
+                if(resDAO.bdRemove(Integer.parseInt(jtabela.getValueAt(jtabela.getSelectedRow(), 0).toString()))){
+                    JOptionPane.showMessageDialog(null, "Residencia excluida com sucesso", "Sucesso", 1);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Residencia não excluida\nVerifique se a residencia possui dependencias", "Aviso", 3);
+                }
                 preencherTabela(jtabela);
             }
         }
+    }
+    
+    @Override
+    public void update(int idRes, boolean comando) {
+        resDAO.bdUpdate(idRes, comando);
     }
 }

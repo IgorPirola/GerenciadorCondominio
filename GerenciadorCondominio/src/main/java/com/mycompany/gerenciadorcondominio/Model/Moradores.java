@@ -4,14 +4,13 @@
  */
 package com.mycompany.gerenciadorcondominio.Model;
 
-import com.mycompany.gerenciadorcondominio.Observer.Observer;
 import java.util.Objects;
 
 /**
  *
  * @author Igor
  */
-public class Moradores extends Pessoa implements Observer {
+public class Moradores extends Pessoa {
     private int id;
     private Residencia res;
     
@@ -68,10 +67,5 @@ public class Moradores extends Pessoa implements Observer {
         return "Id: " + id + "\n" +
                 "Res: " + res + "\n" +
                 super.toString();
-    }
-
-    @Override
-    public void update(int idFatura) {
-        
     }
 }

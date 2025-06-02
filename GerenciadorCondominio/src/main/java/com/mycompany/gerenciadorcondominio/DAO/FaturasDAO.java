@@ -82,7 +82,7 @@ public class FaturasDAO {
                 PreparedStatement comando = con.prepareStatement(sql);            
                 ResultSet resultado = comando.executeQuery();
                 
-                if(resultado.next()){
+                while(resultado.next()){
                     Faturas fatura = new Faturas();
                     
                     fatura.setId(resultado.getInt("id"));
@@ -108,7 +108,7 @@ public class FaturasDAO {
                 PreparedStatement comando = con.prepareStatement(sql);
                 comando.setInt(1, id);
 
-                comando.executeQuery();
+                comando.executeUpdate();
                 return true;
             } catch (SQLException e){
                 return false;

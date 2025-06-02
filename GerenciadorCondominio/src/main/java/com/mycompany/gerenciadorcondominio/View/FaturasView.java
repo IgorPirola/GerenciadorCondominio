@@ -4,24 +4,23 @@
  */
 package com.mycompany.gerenciadorcondominio.View;
 
-import com.mycompany.gerenciadorcondominio.Controller.MoradorController;
-import com.mycompany.gerenciadorcondominio.Controller.ProprietarioController;
+import com.mycompany.gerenciadorcondominio.Controller.FaturaController;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Igor
  */
-public class ProprietariosView extends javax.swing.JFrame {
-    private ProprietarioController propCon = new ProprietarioController();
+public class FaturasView extends javax.swing.JFrame {
+    private final FaturaController fatCon;
     
     /**
      * Creates new form ProprietariosView
      */
-    public ProprietariosView() {
+    public FaturasView(FaturaController fatCon) {
         initComponents();
-        
-        propCon.preencherTabela(jTable1);
+        this.fatCon = fatCon;
+        fatCon.preencherTabela(jTable1);
     }
 
     /**
@@ -39,14 +38,14 @@ public class ProprietariosView extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnCriar = new javax.swing.JButton();
-        jLNome = new javax.swing.JLabel();
-        jTxtNome = new javax.swing.JTextField();
-        jLIdade = new javax.swing.JLabel();
-        jTxtIdade = new javax.swing.JTextField();
-        jLCpf = new javax.swing.JLabel();
-        jTxtCpf = new javax.swing.JTextField();
-        jLRg = new javax.swing.JLabel();
-        jTxtRg = new javax.swing.JTextField();
+        jLRes = new javax.swing.JLabel();
+        jTxtRes = new javax.swing.JTextField();
+        jLValor = new javax.swing.JLabel();
+        jTxtValor = new javax.swing.JTextField();
+        jLMes = new javax.swing.JLabel();
+        jTxtMes = new javax.swing.JTextField();
+        jLAno = new javax.swing.JLabel();
+        jTxtAno = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,21 +57,28 @@ public class ProprietariosView extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Nome", "Idade", "CPF", "RG"
+                "ID", "ID Residencia", "Valor", "Mês", "Ano"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
         });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Lista de Proprietários");
+        jLabel1.setText("Lista de Faturas atrasadas");
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -95,28 +101,28 @@ public class ProprietariosView extends javax.swing.JFrame {
             }
         });
 
-        jLNome.setLabelFor(jTxtNome);
-        jLNome.setText("Nome:");
+        jLRes.setLabelFor(jTxtRes);
+        jLRes.setText("ID Residencia:");
 
-        jTxtNome.addActionListener(new java.awt.event.ActionListener() {
+        jTxtRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtNomeActionPerformed(evt);
+                jTxtResActionPerformed(evt);
             }
         });
 
-        jLIdade.setLabelFor(jTxtIdade);
-        jLIdade.setText("Idade:");
+        jLValor.setLabelFor(jTxtValor);
+        jLValor.setText("Valor:");
 
-        jLCpf.setLabelFor(jTxtCpf);
-        jLCpf.setText("CPF:");
+        jLMes.setLabelFor(jTxtMes);
+        jLMes.setText("Mês:");
 
-        jTxtCpf.addActionListener(new java.awt.event.ActionListener() {
+        jTxtMes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTxtCpfActionPerformed(evt);
+                jTxtMesActionPerformed(evt);
             }
         });
 
-        jLRg.setText("RG:");
+        jLAno.setText("Ano:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,7 +131,7 @@ public class ProprietariosView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCriar)
@@ -134,49 +140,46 @@ public class ProprietariosView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnVoltar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLCpf)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLRg)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLNome)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLIdade)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLMes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTxtMes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLAno)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTxtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLRes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTxtRes, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLValor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTxtValor)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(193, 193, 193)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(195, 195, 195))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(39, 39, 39)
+                .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLNome)
-                    .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLIdade)
-                    .addComponent(jTxtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLRes)
+                    .addComponent(jTxtRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLValor)
+                    .addComponent(jTxtValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLCpf)
-                    .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLRg)
-                    .addComponent(jTxtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLMes)
+                    .addComponent(jTxtMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLAno)
+                    .addComponent(jTxtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExcluir)
@@ -190,7 +193,7 @@ public class ProprietariosView extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // TODO add your handling code here:
-        propCon.excluir(jTable1);
+        fatCon.excluir(jTable1);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -201,30 +204,33 @@ public class ProprietariosView extends javax.swing.JFrame {
 
     private void btnCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarActionPerformed
         // TODO add your handling code here:
-        String nome = jTxtNome.getText();
-        String cpf = jTxtCpf.getText();
-        String rg = jTxtRg.getText();
-        int idade;
+        int mes;
+        int ano;
+        int resID;
+        double valor;
         try{
-            idade = Integer.parseInt(jTxtIdade.getText());
-            if(propCon.insertProprietario(nome, idade, cpf, rg)){
-                propCon.preencherTabela(jTable1);
-                JOptionPane.showMessageDialog(null, "Proprietario inserido com sucesso", "Sucesso", 1);
+            valor = Double.parseDouble(jTxtValor.getText());
+            resID = Integer.parseInt(jTxtRes.getText());
+            ano = Integer.parseInt(jTxtAno.getText());
+            mes = Integer.parseInt(jTxtMes.getText());
+            if(fatCon.insertFatura(resID, valor, mes, ano)){
+                fatCon.preencherTabela(jTable1);
+                JOptionPane.showMessageDialog(null, "Residencia inserida com sucesso", "Sucesso", 1);
             } else {
-                JOptionPane.showMessageDialog(null, "Proprietario não inserido\nVerifique os campos", "Falha", 0);
+                JOptionPane.showMessageDialog(null, "Residencia não inserida\nVerifique os campos", "Falha", 0);
             }
         } catch (NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Campo idade ou ID Residencia invalido", "Falha", 0);
+            JOptionPane.showMessageDialog(null, "Campo de numero ou do proprietario da Residencia invalido", "Falha", 0);
         }
     }//GEN-LAST:event_btnCriarActionPerformed
 
-    private void jTxtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtNomeActionPerformed
+    private void jTxtResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtResActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtNomeActionPerformed
+    }//GEN-LAST:event_jTxtResActionPerformed
 
-    private void jTxtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtCpfActionPerformed
+    private void jTxtMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtMesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTxtCpfActionPerformed
+    }//GEN-LAST:event_jTxtMesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,20 +249,23 @@ public class ProprietariosView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProprietariosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FaturasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProprietariosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FaturasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProprietariosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FaturasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProprietariosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FaturasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ProprietariosView().setVisible(true);
+                new FaturasView(new FaturaController()).setVisible(true);
             }
         });
     }
@@ -265,16 +274,16 @@ public class ProprietariosView extends javax.swing.JFrame {
     private javax.swing.JButton btnCriar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnVoltar;
-    private javax.swing.JLabel jLCpf;
-    private javax.swing.JLabel jLIdade;
-    private javax.swing.JLabel jLNome;
-    private javax.swing.JLabel jLRg;
+    private javax.swing.JLabel jLAno;
+    private javax.swing.JLabel jLMes;
+    private javax.swing.JLabel jLRes;
+    private javax.swing.JLabel jLValor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtCpf;
-    private javax.swing.JTextField jTxtIdade;
-    private javax.swing.JTextField jTxtNome;
-    private javax.swing.JTextField jTxtRg;
+    private javax.swing.JTextField jTxtAno;
+    private javax.swing.JTextField jTxtMes;
+    private javax.swing.JTextField jTxtRes;
+    private javax.swing.JTextField jTxtValor;
     // End of variables declaration//GEN-END:variables
 }

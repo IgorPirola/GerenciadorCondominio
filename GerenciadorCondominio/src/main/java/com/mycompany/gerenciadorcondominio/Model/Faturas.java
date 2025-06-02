@@ -4,29 +4,24 @@
  */
 package com.mycompany.gerenciadorcondominio.Model;
 
-import com.mycompany.gerenciadorcondominio.Observer.Observer;
-import com.mycompany.gerenciadorcondominio.Observer.Subject;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
  *
  * @author Igor
  */
-public class Faturas implements Subject {
+public class Faturas {
    private int id;
    private Residencia res;
    private double valor;
    private int mes;
    private int ano;
-   private ArrayList<Observer> observers;
 
     public Faturas(Residencia res, double valor, int mes, int ano) {
         this.res = res;
         this.valor = valor;
         this.mes = mes;
         this.ano = ano;
-        this.observers = new ArrayList();
     }
 
     public Faturas() {
@@ -119,27 +114,4 @@ public class Faturas implements Subject {
                 "Mes: " + mes + "\n" +
                 "Ano: " + ano;
     }
-
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        int i = observers.indexOf(observer);
-        
-        if (i >= 0) observers.remove(i);
-                
-    }
-
-    @Override
-    public void notifyObserver() {
-        //Integrar aviso na view
-        
-        for(Observer o : observers){
-            o.update(id);
-        }
-    }
-   
 }

@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -40,6 +42,23 @@ public class ResidenciaDAO {
                 comando.executeUpdate();
                 return true;
             } catch (SQLException e){
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    public boolean bdUpdate(int idRes, boolean comando){
+        if(con!=null){
+            try {
+                String sql="UPDATE Residencia SET em_dia = ? WHERE id = ?";
+                PreparedStatement comandoSql = con.prepareStatement(sql);
+                comandoSql.setBoolean(1, comando);
+                comandoSql.setInt(2, idRes);
+                comandoSql.executeUpdate();
+                return true;
+            } catch (SQLException e){ 
+                System.out.println(e);
                 return false;
             }
         }
@@ -77,13 +96,14 @@ public class ResidenciaDAO {
         List<Residencia> resL = new ArrayList<>();
         if(con!=null){
             try{
-                String sql="SELECT id_prop, rua, numero, cep, em_dia FROM Residencia";
+                String sql="SELECT id, id_prop, rua, numero, cep, em_dia FROM Residencia";
                 PreparedStatement comando = con.prepareStatement(sql);
                 ResultSet resultado = comando.executeQuery();
                 
                 while(resultado.next()){
                     Residencia res = new Residencia();
-                    res.setId(idRes);
+                    
+                    res.setId(resultado.getInt("id"));
                     res.setProp(new ProprietarioDAO().bdSelect(resultado.getInt("id_prop")));
                     res.setRua(resultado.getString("rua"));
                     res.setNumero(resultado.getInt("numero"));

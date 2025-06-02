@@ -9,5 +9,5 @@ package com.mycompany.gerenciadorcondominio.Observer;
  * @author Igor
  */
 public interface Observer {
-    public void update(int idFatura);
+    public void update(int idRes, boolean comando);
 }

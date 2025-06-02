@@ -11,5 +11,5 @@ package com.mycompany.gerenciadorcondominio.Observer;
 public interface Subject {
     public void addObserver(Observer observer);
     public void removeObserver(Observer observer);
-    public void notifyObserver();
+    public void notifyObserver(int idRes, boolean comando);
 }

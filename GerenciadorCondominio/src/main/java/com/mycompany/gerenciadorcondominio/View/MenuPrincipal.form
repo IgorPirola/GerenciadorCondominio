@@ -25,11 +25,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Residencias"/>
           </Properties>
+          <Events>
+            <EventHandler event="menuSelected" listener="javax.swing.event.MenuListener" parameters="javax.swing.event.MenuEvent" handler="jMenuResMenuSelected"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuFat">
           <Properties>
             <Property name="text" type="java.lang.String" value="Faturas"/>
           </Properties>
+          <Events>
+            <EventHandler event="menuSelected" listener="javax.swing.event.MenuListener" parameters="javax.swing.event.MenuEvent" handler="jMenuFatMenuSelected"/>
+          </Events>
         </Menu>
       </SubComponents>
     </Menu>
